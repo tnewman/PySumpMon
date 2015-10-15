@@ -1,6 +1,8 @@
 import re
 import serial
 import twilio.rest
+from PySumpMon.domain import *
+from sqlalchemy import desc
 
 
 class DistanceSensorService:
@@ -29,6 +31,49 @@ class DistanceSensorService:
 
     def __del__(self):
         self.close()
+
+
+class EventSuppressionService:
+    def __init__(self, session):
+        self.session = session
+
+    def get_suppressed_until(self):
+        suppress_until = self.session.query(EventSuppression).order_by(
+            desc(EventSuppression.suppress_until)).limit(1).all()
+
+        return suppress_until
+
+    def suppress_event_until(self, suppress_until):
+        event_suppression = EventSuppression()
+        event_suppression.suppress_until = suppress_until
+        self.session.add(event_suppression)
+
+
+class SumpWaterDistanceService:
+    def __init__(self, session):
+        self.session = session
+
+    def log_distance(self, distance_cm):
+        distance = SumpWaterDistance()
+        distance.water_distance_cm = distance_cm
+        self.session.add(distance)
+
+
+class NotificationLogService:
+    def __init__(self, session):
+        self.session = session
+
+    def get_last_notifiction(self):
+        last_notification = self.session.query(NotificationLog) \
+            .order_by(NotificationLog.id.desc()).first()
+
+        return last_notification
+
+    def log_notification(self, to, message):
+        notification = NotificationLog()
+        notification.to = to
+        notification.message = message
+        self.session.add(notification)
 
 
 class TwilioSMSService:
