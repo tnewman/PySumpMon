@@ -1,5 +1,6 @@
 import re
 import serial
+import twilio.rest
 
 
 class DistanceSensorService:
@@ -28,3 +29,15 @@ class DistanceSensorService:
 
     def __del__(self):
         self.close()
+
+
+class TwilioSMSService:
+    def __init__(self, account, token, from_number, to_number):
+        self.twilio = twilio.rest.TwilioRestClient(account, token)
+        self.from_number = from_number
+        self.to_number = to_number
+
+    def send_sump_pump_level_high_message(self):
+        self.twilio.messages.create(to=self.to_number, from_=self.from_number,
+                                    body='PySumpMon Warning: ' +
+                                         'High sump pump level.')
