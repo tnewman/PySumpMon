@@ -55,7 +55,7 @@ class SumpWaterDistanceService:
 
     def get_all_distance_logs(self):
         distance_logs = self.session.query(SumpWaterDistance).order_by(
-            desc(SumpWaterDistance.timestamp)).all()
+            desc(SumpWaterDistance.id)).all()
 
         return distance_logs
 
@@ -71,7 +71,7 @@ class NotificationLogService:
 
     def get_last_notifiction(self):
         last_notification = self.session.query(NotificationLog) \
-            .order_by(NotificationLog.id.desc()).first()
+            .order_by(desc(NotificationLog.id)).first()
 
         return last_notification
 
