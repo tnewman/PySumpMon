@@ -39,7 +39,7 @@ class EventSuppressionService:
 
     def get_suppressed_until(self):
         suppress_until = self.session.query(EventSuppression).order_by(
-            desc(EventSuppression.suppress_until)).limit(1).all()
+            desc(EventSuppression.suppress_until)).first()
 
         return suppress_until
 
