@@ -1,1 +1,1 @@
-DB_CONNECTION_STRING = 'sqlite:///pydumpmon.db'
+DB_CONNECTION_STRING = 'sqlite:///pysumpmon.db'

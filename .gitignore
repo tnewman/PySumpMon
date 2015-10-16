@@ -57,4 +57,4 @@ docs/_build/
 target/
 
 # PySumpMon SQLite DB
-PySumpMon/pydumpmon.db
+*pysumpmon.db*

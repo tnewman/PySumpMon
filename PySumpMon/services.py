@@ -53,6 +53,12 @@ class SumpWaterDistanceService:
     def __init__(self, session):
         self.session = session
 
+    def get_all_distance_logs(self):
+        distance_logs = self.session.query(SumpWaterDistance).order_by(
+            desc(SumpWaterDistance.timestamp)).all()
+
+        return distance_logs
+
     def log_distance(self, distance_cm):
         distance = SumpWaterDistance()
         distance.water_distance_cm = distance_cm
