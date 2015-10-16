@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, DateTime, DECIMAL, String
+from sqlalchemy import Column, Integer, DateTime, String
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -9,7 +9,7 @@ class SumpWaterDistance(Base):
     __tablename__ = 'sump_pump_water_distances'
 
     id = Column(Integer, primary_key=True)
-    water_distance_cm = Column(DECIMAL)
+    water_distance_cm = Column(String)
     timestamp = Column(DateTime, default=datetime.utcnow())
 
 
