@@ -58,3 +58,6 @@ target/
 
 # PySumpMon SQLite DB
 *pysumpmon.db*
+
+# PySumpMon Configuration
+*config.py
