@@ -7,6 +7,7 @@ from sqlalchemy import desc
 
 class DistanceSensorService:
     def __init__(self, com_port='COM1'):
+        self.serial_port = None
         self.serial_port = serial.Serial(com_port, 115200)
 
     def open(self):
@@ -16,18 +17,23 @@ class DistanceSensorService:
         try:
             serial_data = str(self.serial_port.readline(), 'ascii')
 
+            while self.serial_port.inWaiting() > 0:
+                serial_data = str(self.serial_port.readline(), 'ascii')
+
             # Regex Matches [Distance: XXX.XX]
             match = re.search('\[Distance:(\d+\.\d+)\]', serial_data)
 
             if match:
-                return match.group(1)
+                distance = float(match.group(1))
+                return distance
             else:
-                return None
+                return self.get_distance_cm()
         except serial.SerialException:
             return None
 
     def close(self):
-        self.serial_port.close()
+        if self.serial_port:
+            self.serial_port.close()
 
     def __del__(self):
         self.close()
@@ -61,10 +67,9 @@ class NotificationLogService:
 
         return last_notification
 
-    def log_notification(self, to, message):
+    def log_notification(self, to):
         notification = NotificationLog()
         notification.to = to
-        notification.message = message
         self.session.add(notification)
 
 
