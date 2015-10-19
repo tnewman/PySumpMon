@@ -30,12 +30,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>Event Suppression</h1>
+                    <h1>Event Notification</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <p>Button Here Along With Suppression Data</p>
+                    {% if event_suppression %}
+                    <p>
+                        Event Notifications are suppressed until
+                        {{ event_suppression.suppress_until.strftime(
+                        '%I:%M %p')}} UTC.
+                    </p>
+                    {% else %}
+                    <p>Event Notifications are not currently suppressed.</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="row">
@@ -45,7 +53,22 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <p>Table Here</p>
+                    {% if distance_logs %}
+                    <table class="table-bordered">
+                        <tr>
+                            <th>Water Distance (cm)</th>
+                            <th>Timestamp</th>
+                        </tr>
+                        {% for distance_log in distance_logs %}
+                        <tr>
+                            <td>{{ distance_log.water_distance_cm}}</td>
+                            <td>{{ distance_log.timestamp}}</td>
+                        </tr>
+                        {%endfor%}
+                    </table>
+                    {% else %}
+                    <p>No Records</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

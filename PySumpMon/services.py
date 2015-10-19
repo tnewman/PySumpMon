@@ -38,7 +38,8 @@ class EventSuppressionService:
         self.session = session
 
     def get_suppressed_until(self):
-        suppress_until = self.session.query(EventSuppression).order_by(
+        suppress_until = self.session.query(EventSuppression).filter(
+            EventSuppression.suppress_until > datetime.now()).order_by(
             desc(EventSuppression.suppress_until)).first()
 
         return suppress_until
@@ -47,22 +48,7 @@ class EventSuppressionService:
         event_suppression = EventSuppression()
         event_suppression.suppress_until = suppress_until
         self.session.add(event_suppression)
-
-
-class SumpWaterDistanceService:
-    def __init__(self, session):
-        self.session = session
-
-    def get_all_distance_logs(self):
-        distance_logs = self.session.query(SumpWaterDistance).order_by(
-            desc(SumpWaterDistance.id)).all()
-
-        return distance_logs
-
-    def log_distance(self, distance_cm):
-        distance = SumpWaterDistance()
-        distance.water_distance_cm = distance_cm
-        self.session.add(distance)
+        self.session.commit()
 
 
 class NotificationLogService:
@@ -80,6 +66,23 @@ class NotificationLogService:
         notification.to = to
         notification.message = message
         self.session.add(notification)
+
+
+class SumpWaterDistanceService:
+    def __init__(self, session):
+        self.session = session
+
+    def get_all_distance_logs(self):
+        distance_logs = self.session.query(SumpWaterDistance).order_by(
+            desc(SumpWaterDistance.id)).all()
+
+        return distance_logs
+
+    def log_distance(self, distance_cm):
+        distance = SumpWaterDistance()
+        distance.water_distance_cm = distance_cm
+        self.session.add(distance)
+        self.session.commit()
 
 
 class TwilioSMSService:
