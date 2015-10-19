@@ -25,5 +25,4 @@ class EventSuppression(Base):
     __tablename__ = 'event_suppressions'
 
     id = Column(Integer, primary_key=True)
-    message = Column(String)
     suppress_until = Column(DateTime, default=datetime.utcnow())
