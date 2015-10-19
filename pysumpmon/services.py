@@ -1,7 +1,7 @@
 import re
 import serial
 import twilio.rest
-from PySumpMon.domain import *
+from pysumpmon.domain import *
 from sqlalchemy import desc
 
 

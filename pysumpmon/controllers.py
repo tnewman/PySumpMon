@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from flask import Flask, g, render_template
-from PySumpMon import config, services
+from pysumpmon import config, services
 from serial import SerialException, SerialTimeoutException
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker

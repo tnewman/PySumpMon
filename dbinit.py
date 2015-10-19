@@ -1,5 +1,5 @@
-from PySumpMon import config
-from PySumpMon.domain import Base
+from pysumpmon import config
+from pysumpmon.domain import Base
 from sqlalchemy import create_engine
 
 

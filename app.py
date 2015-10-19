@@ -1,4 +1,4 @@
-from PySumpMon.controllers import app
+from pysumpmon.controllers import app
 
 
 def run():
